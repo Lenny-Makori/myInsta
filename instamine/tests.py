@@ -20,3 +20,7 @@ class ProfileTestClass(TestCase):
         self.user.delete_profile()
         profiles = Profile.objects.all()
         self.assertTrue(len(profiles) == 0)
+
+
+class ImageTestClass(TestCase):
+    
