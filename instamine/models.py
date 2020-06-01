@@ -10,7 +10,10 @@ class Profile(models.Model):
     def __str__(self):
         return self.user
 
-    
+    @classmethod
+    def get_profile(cls, user_id):
+        profile = cls.objects.get(user=user_id)
+        return profile
 
 
 class Image(models.Model):
