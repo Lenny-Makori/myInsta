@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from .models import Image, Profile
+from .forms import ImageForm, ProfileForm
 
 # Create your views here.
 def index(request):
-    image_display = Image.objects.all()
+    image_display = '1 2 1 2 '
 
     return render(request, 'mainview/timeline.html', {"image_display":image_display})
 
@@ -17,3 +18,4 @@ def image(request,image_id):
     except DoesNotExist:
         raise Http404()
     return render(request,"mainview/image.html", {"image":image})
+
