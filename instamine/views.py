@@ -11,8 +11,14 @@ def index(request):
 def search_results(request):
     if 'userToFollow' in request.GET and request.GET['userToFollow']:
         search_term = request.GET.get("userToFollow")
+        searched_user = Profile.search_by_username(search_term)
+        message = f"{search_term}"
 
-    return render(request, 'mainview/search.html')
+        return render(request, 'mainview/search.html', {"message":message})
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'mainview/search.html',{"message":message})
+
 
 def image(request,image_id):
     try:
