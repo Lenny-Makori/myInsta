@@ -19,3 +19,8 @@ def image(request,image_id):
         raise Http404()
     return render(request,"mainview/image.html", {"image":image})
 
+def profile(request):
+    user_profile = Profile.get_profile(id=user_id)
+
+    return render(request, 'profile.html', {'profile':profile})
+
