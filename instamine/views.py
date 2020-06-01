@@ -10,3 +10,10 @@ def index(request):
 def search_results(request):
 
     return render(request, 'mainview/search.html')
+
+def image(request,image_id):
+    try:
+        image = Image.objects.get(id = image_id)
+    except DoesNotExist:
+        raise Http404()
+    return render(request,"mainview/image.html", {"image":image})
