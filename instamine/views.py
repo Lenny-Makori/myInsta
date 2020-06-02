@@ -36,9 +36,16 @@ def profile(request):
 
     return render(request, 'profile.html', {'user_profile':user_profile})
 
-# def update_profile(request):
+def update_profile(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = current_user
+            profile.save()
 
-#     return render(request, 'profile_edit.html')
+    return render(request, 'profile_edit.html', {"form":form})
 
 @login_required(login_url='/accounts/login/')
 def new_image(request):
