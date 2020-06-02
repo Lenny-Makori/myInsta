@@ -8,16 +8,20 @@
    </div>
 
    <div class="row">
-     <h1 class="text-center">{{image.image_name}}</h1>
-   </div>
+    <h1 class="text-center">{{article.title}}</h1>
+  </div>
 
-   <div class="row">
-     <h3>{{image.image_description}}</h3>
-   </div>
+  <div class="row">
+    {% autoescape on %}
+    {{article.post| safe}}
+   {% endautoescape %}
 
-   <div class="row">
-   </div>
+  </div>
 
- </div>
+  <div class="row">
+    <p>Posted {{article.pub_date|timesince}} by {{article.editor.first_name}}</p>
+  </div>
+
+</div>
 
  {% endblock %}

@@ -1,0 +1,27 @@
+{%extends 'mainview/base.html'%} 
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    {% if searched_user%}
+      <h2>Found {{ searched_user|length }} of searched term {{message}}</h2>
+    {% else %}
+      <h2> Found 0 users. {{message}}</h2>
+    {% endif %}
+
+  </div>
+
+  <div class="row">
+
+  {% if searched_user %}
+    {% for image in searched_user %}
+    {{image.username}}
+      <div class="col-sm-6 col-md-3">
+        <img src="{{image.profile_pic.url}}"  class="img-responsive" alt="{{image.user}}"> 
+          <h1>{{image.bio}}</h1>
+      </div>
+    {% endfor %}
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
