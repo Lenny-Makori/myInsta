@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 # Create your views here.
+@login_required(login_url='/accounts/login/')
 def index(request):
     image_display = Image.objects.all()
 
@@ -24,6 +25,7 @@ def search_results(request):
         return render(request, 'mainview/search.html',{"message":message})
 
 
+@login_required(login_url='/accounts/login/')
 def image(request,image_id):
     try:
         image = Image.objects.get(id = image_id)
@@ -31,11 +33,15 @@ def image(request,image_id):
         raise Http404()
     return render(request,"mainview/image.html", {"image":image})
 
-def profile(request):
-    user_profile = Profile.get_profile(id=user_id)
+
+@login_required(login_url='/accounts/login/')
+def profile(request,user_id):
+    print(user_id)
+    user_profile = Profile.get_profile(user_id)
 
     return render(request, 'profile.html', {'user_profile':user_profile})
 
+@login_required(login_url='/accounts/login/')
 def update_profile(request):
     current_user = request.user
     if request.method == 'POST':
@@ -44,6 +50,9 @@ def update_profile(request):
             profile = form.save(commit=False)
             profile.user = current_user
             profile.save()
+        return redirect('profileview')
+    else:
+        form = ProfileForm()
 
     return render(request, 'profile_edit.html', {"form":form})
 

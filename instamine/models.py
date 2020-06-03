@@ -8,7 +8,7 @@ class Profile(models.Model):
     bio = models.TextField(blank=True)
 
     def __str__(self):
-        return self.user
+        return self.bio
 
     @classmethod
     def get_profile(cls, user_id):
