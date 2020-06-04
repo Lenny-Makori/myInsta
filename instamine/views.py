@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Image, Profile
-from .forms import ImageForm, ProfileForm
+from .forms import ImageForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
@@ -30,7 +30,15 @@ def image(request,image_id):
     try:
         image = Image.objects.get(id = image_id)
         if request.method == 'POST':
-            commentform = 
+            commentform = CommentForm(request.POST, request.FILES)
+            if commentform.is_valid:
+                comment = commentform.save(commit=False)
+                comment.user = current_user
+                comment.image = image_id
+                comment.save()
+                return redirect('homepage')
+            else:
+                commentform = CommentForm()
     except DoesNotExist:
         raise Http404()
     return render(request,"mainview/image.html", {"image":image})
