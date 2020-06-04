@@ -1,4 +1,4 @@
-{%extends "registration/base.html"%}
+{%extends "django_registration/base.html"%}
 {% load bootstrap3 %}
 {% block content %}
 <div class="container">
@@ -27,6 +27,7 @@
             <input type="hidden" name="next" value="{{next}}">
 
           </form>
+          <a href="/accounts/register">Don't have an account? Sign up here.</a>
 
         </div>
 

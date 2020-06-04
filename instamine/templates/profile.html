@@ -4,8 +4,14 @@
 <div class="container">
     <div class="col-sm-6  col-md-4">
         <div class="thumbnail">
-            <img src="" alt="" class="img-responsive myImg">
+            <img src="{{user_profile.profile_pic.url}}" alt="" class="img-responsive myImg">
         </div>
+    </div>
+    <div class="col-sm-6  col-md-4">
+        <div class="thumbnail">
+            <h3>{{user_profile.bio}}</h3><br><br><br><br>
+        </div>
+        <button mat-icon-button><mat-icon>Edit Profile</mat-icon></button>
     </div>
 </div>
 {%endblock%}
