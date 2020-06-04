@@ -3,7 +3,6 @@ from .models import Image, Profile
 from .forms import ImageForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -12,7 +11,6 @@ def index(request):
 
     return render(request, 'mainview/timeline.html', {"image_display":image_display})
 
-@login_required(login_url='/accounts/login/')
 def search_results(request):
     if 'userToFollow' in request.GET and request.GET['userToFollow']:
         search_term = request.GET.get("userToFollow")
@@ -38,28 +36,32 @@ def image(request,image_id):
 
 @login_required(login_url='/accounts/login/')
 def profile(request,user_id):
-    print(user_id)
     user_profile = Profile.get_profile(user_id)
 
     return render(request, 'profile.html', {'user_profile':user_profile})
 
 @login_required(login_url='/accounts/login/')
-# @transaction.atomic
 def update_profile(request):
+    current_user = request.user
+    current_user_id = current_user.id
+    user_profile = Profile.get_profile(user_id)
+    print(current_user_id)
     if request.method == 'POST':
-        user_form = UserCreationForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES)
-        if user_form.is_valid() and profile_form.is_valid():
-            current_user = user_form.save()
-            # profile_form.save()
-            profile = profile_form.save(commit=False)
-            profile.user = current_user.id
+        form = ProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = current_user
             profile.save()
-        return redirect('profileview')
+            user_profile = Profile.get_profile(current_user_id)
+            new_profile = Profile.objects.filter(user=current_user_id).update(profile_pic=profile.profile_pic, bio=profile.bio)
+            new_profile.save()
+            print(new_profile)
+
+        return redirect('profile')
     else:
         form = ProfileForm()
 
-    return render(request, 'profile_edit.html', {'form':profile_form})
+    return render(request, 'profile_edit.html', {"form":form})
 
 @login_required(login_url='/accounts/login/')
 def new_image(request):

@@ -41,3 +41,9 @@ class Image(models.Model):
     image_caption = models.TextField()
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
     pub_date = models.DateTimeField(auto_now_add=True)
+
+
+class comment(models.Model):
+    comment = models.CharField(maxx_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
