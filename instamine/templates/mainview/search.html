@@ -20,13 +20,11 @@
       <div class="col-sm-6 col-md-3">
         <h3>{{image.username}}</h3>
       </div>
+      <img src="{{image.profile.profile_pic.url}}"  class="img-responsive" alt="{{image.user}}" style="max-width:100px;">
+      <button type="button">Follow</button><br><br><br>
     {% endfor %}
-    {%for one in profile%}
-    <div class="col-sm-6 col-md-3">
-      <img src="{{one.profile_pic.url}}"  class="img-responsive" alt="{{image.user}}" style="max-width:100px;"> 
-    </div>
-    {%endfor%}
-    <button type="button">Follow</button>
+    
+    
     
     {{profile.bio}}
   {% endif %}

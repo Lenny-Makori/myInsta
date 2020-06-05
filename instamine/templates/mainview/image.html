@@ -2,19 +2,19 @@
 
  {% block content %}
  <div class="container">
-
-   <div class="row">
-     <img src="{{image.image.url}}"  class="img-responsive" alt="" style="max-width:1000px;>
-   </div>
-
-   <div class="row">
+  <div class="row">
     <h1 class="text-center">{{image.image_name}}</h1>
   </div>
+
+   <div class="row">
+     <img src="{{image.image.url}}"  class="img-responsive" alt="" style="max-width:800px;">
+   </div>
 
   <div class="row">
       <h3>{{image.image_caption}}</h3>
   </div>
   <div class="row">
+    <h4>Comments</h4>
     {%for comment in image_comments%}
     <div class="card" style="width: 18rem;">
       <ul class="list-group list-group-flush">

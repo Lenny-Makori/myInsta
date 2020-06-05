@@ -20,7 +20,6 @@ def search_results(request):
         for image in searched_user:
             user_id = image.id
             profile = Profile.objects.filter(user=user_id)
-        print(profile)
         message = f"{search_term}"
 
         return render(request, 'mainview/search.html', {"message":message, "searched_user": searched_user, "profile": profile})
