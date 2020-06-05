@@ -5,14 +5,19 @@
 {%for item in image_display%}
 <div class="col-sm-6  col-md-4">
     <div class="thumbnail">
-        <img id='myImg' src="{{item.image.url}}" class="img-responsive myImg" alt="Image" data-toggle="modal" data-target="#exampleModal{{item.id}}"class="img-responsive" alt="Image" style="max-width:300px;">
+        <a href="{% url 'imageview' image_id=item.id %}"><img id='myImg' src="{{item.image.url}}" class="img-responsive myImg" alt="Image" data-toggle="modal" data-target="#exampleModal{{item.id}}"class="img-responsive" alt="Image" style="max-width:300px;"></a>
         <div class="caption">
             <h3>{{item.image_name}}</h3>
             <p>{{item.image_caption| truncatechars:25}}.</p>
             <p>{{item.pub_date}}</p>
+
             
         </div>
+        
     </div>
 </div>
 {%endfor%}
+{% for comment in comments %}
+        <p>@{{comment.user.username}} - {{comment.comment}} </p>
+{% endfor %}
 {%endblock%}

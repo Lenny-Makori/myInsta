@@ -11,7 +11,8 @@
         <div class="thumbnail">
             <h3>{{user_profile.bio}}</h3><br><br><br><br>
         </div>
-        <button mat-icon-button><mat-icon>Edit Profile</mat-icon></button>
+        <!-- <button mat-icon-button><mat-icon>Edit Profile</mat-icon></button> -->
+        <a href="{% url 'profileedit' user_id=user_profile.user.id %}" class='btn btn-outline-danger'>Edit Profile</a>
     </div>
 </div>
 {%endblock%}

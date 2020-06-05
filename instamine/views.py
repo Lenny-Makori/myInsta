@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Image, Profile
 from .forms import ImageForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
@@ -29,49 +29,43 @@ def search_results(request):
 def image(request,image_id):
     try:
         image = Image.objects.get(id = image_id)
-        if request.method == 'POST':
-            commentform = CommentForm(request.POST, request.FILES)
-            if commentform.is_valid:
-                comment = commentform.save(commit=False)
-                comment.user = current_user
-                comment.image = image_id
-                comment.save()
-                return redirect('homepage')
-            else:
-                commentform = CommentForm()
     except DoesNotExist:
         raise Http404()
-    return render(request,"mainview/image.html", {"image":image})
+    return render(request, "mainview/image.html", {"image": image})
 
 
 @login_required(login_url='/accounts/login/')
-def profile(request,user_id):
+def profile(request, user_id):
     user_profile = Profile.get_profile(user_id)
 
     return render(request, 'profile.html', {'user_profile':user_profile})
 
 @login_required(login_url='/accounts/login/')
-def update_profile(request):
+def update_profile(request, user_id):
     current_user = request.user
     current_user_id = current_user.id
     user_profile = Profile.get_profile(user_id)
-    print(current_user_id)
+    
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = current_user
-            profile.save()
-            user_profile = Profile.get_profile(current_user_id)
-            new_profile = Profile.objects.filter(user=current_user_id).update(profile_pic=profile.profile_pic, bio=profile.bio)
-            new_profile.save()
-            print(new_profile)
+            # profile = form.save(commit=False)
+            # profile.user = current_user
+            # profile.save()
+            # get_user_profile = Profile.get_profile(current_user_id)
+            # print(get_user_profile)
+            
+            # new_profile = Profile.objects.filter(user=current_user_id).update(profile_pic=profile.profile_pic, bio=profile.bio)
+            # new_profile.save()
+            # print(new_profile)
+            form.save()
 
-        return redirect('profile')
+        return redirect('homepage')
     else:
         form = ProfileForm()
 
-    return render(request, 'profile_edit.html', {"form":form})
+    return render(request, 'profile_edit.html', {"form": form})
+
 
 @login_required(login_url='/accounts/login/')
 def new_image(request):
@@ -85,5 +79,20 @@ def new_image(request):
         return redirect('homepage')
     else:
         form = ImageForm()
-    return render(request,'new_image.html',{'form':form})
+    return render(request, 'new_image.html', {'form': form})
 
+
+def comment_image(request, image_id):
+    image = get_object_or_404(Image, id=image_id)
+    current_user = request.user
+    if request.method == 'POST':
+            commentform = CommentForm(request.POST, request.FILES)
+            if commentform.is_valid:
+                comment = commentform.save(commit=False)
+                comment.user = current_user
+                comment.image = image
+                comment.save()
+            return redirect('homepage')
+    else:
+        commentform = CommentForm()
+    return render(request, 'image_comment.html', {})
