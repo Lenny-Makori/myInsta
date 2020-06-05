@@ -4,22 +4,26 @@
  <div class="container">
 
    <div class="row">
-     <img src="{{image.image.url}}"  class="img-responsive" alt="">
+     <img src="{{image.image.url}}"  class="img-responsive" alt="" style="max-width:1000px;>
    </div>
 
    <div class="row">
-    <h1 class="text-center">{{article.title}}</h1>
+    <h1 class="text-center">{{image.image_name}}</h1>
   </div>
 
   <div class="row">
-    {% autoescape on %}
-    {{article.post| safe}}
-   {% endautoescape %}
-
+      <h3>{{image.image_caption}}</h3>
+  </div>
+  <div class="row">
+    <div class="card" style="width: 18rem;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Cras justo odio</li>
+      </ul>
+    </div>
   </div>
 
   <div class="row">
-    <p>Posted {{article.pub_date|timesince}} by {{article.editor.first_name}}</p>
+    <a href="{% url 'comment' image_id=image.id %}" class='btn btn-outline-danger'>Add Comment</a>
   </div>
 
 </div>

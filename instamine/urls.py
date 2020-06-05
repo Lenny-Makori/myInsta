@@ -11,7 +11,7 @@ urlpatterns=[
     path('new/image', views.new_image, name='new_image'),
     path('profile/<user_id>', views.profile, name='profileview'),
     path('profile/edit/<user_id>', views.update_profile, name = 'profileedit'),
-    path('comment/<int:image_id>', views.comment_image, name='comment'),
+    path('comment/<image_id>', views.comment_image, name='comment'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

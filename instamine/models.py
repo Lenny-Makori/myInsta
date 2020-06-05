@@ -6,7 +6,7 @@ from django.dispatch import receiver
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    profile_pic = models.ImageField(upload_to='image/', default="image/hd5.jpeg", blank=True)
+    profile_pic = models.ImageField(upload_to='image/', default="image/download.png", blank=True)
     bio = models.TextField(blank=True)
 
     def __str__(self):
@@ -41,6 +41,12 @@ class Image(models.Model):
     image_caption = models.TextField()
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
     pub_date = models.DateTimeField(auto_now_add=True)
+
+    @classmethod
+    def get_image_of_user(cls, user_id):
+        image = cls.objects.filter(profile=user_id)
+
+        return image
 
 
 class comment(models.Model):

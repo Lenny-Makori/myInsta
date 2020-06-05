@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def index(request):
-    image_display = Image.objects.all()
+    current_user = request.user
+    image_display = Image.get_image_of_user(current_user)
 
     return render(request, 'mainview/timeline.html', {"image_display":image_display})
 
@@ -95,4 +96,4 @@ def comment_image(request, image_id):
             return redirect('homepage')
     else:
         commentform = CommentForm()
-    return render(request, 'image_comment.html', {})
+    return render(request, 'image_comment.html', {"form": commentform})
