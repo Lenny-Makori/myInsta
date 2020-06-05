@@ -6,7 +6,7 @@ from django.dispatch import receiver
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    profile_pic = models.ImageField(upload_to='image/', default="image/download.png", blank=True)
+    profile_pic = models.ImageField(upload_to='image/', default="image/male.png", blank=True)
     bio = models.TextField(blank=True)
 
     def __str__(self):
@@ -53,3 +53,9 @@ class comment(models.Model):
     comment = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
+
+@classmethod
+def display_comments(cls, image_id):
+    comments = cls.objects.filter(image=image_id)
+
+    return comments

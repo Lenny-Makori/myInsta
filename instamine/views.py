@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Image, Profile
+from .models import Image, Profile, comment
 from .forms import ImageForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -93,7 +93,10 @@ def comment_image(request, image_id):
                 comment.user = current_user
                 comment.image = image
                 comment.save()
-            return redirect('homepage')
+            return redirect('imageview')
     else:
         commentform = CommentForm()
     return render(request, 'image_comment.html', {"form": commentform})
+
+def comments(request, image_id):
+    image_comments = comment.
