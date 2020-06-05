@@ -17,10 +17,13 @@ def search_results(request):
         search_term = request.GET.get("userToFollow")
         # searched_user = Profile.search_by_username(search_term)
         searched_user = User.objects.filter(username__icontains=search_term)
-        print(searched_user)
+        for image in searched_user:
+            user_id = image.id
+            profile = Profile.objects.filter(user=user_id)
+        print(profile)
         message = f"{search_term}"
 
-        return render(request, 'mainview/search.html', {"message":message, "searched_user": searched_user})
+        return render(request, 'mainview/search.html', {"message":message, "searched_user": searched_user, "profile": profile})
     else:
         message = "You haven't searched for any term"
         return render(request, 'mainview/search.html',{"message":message})
@@ -30,9 +33,10 @@ def search_results(request):
 def image(request,image_id):
     try:
         image = Image.objects.get(id = image_id)
+        image_comments = comment.display_comments(image_id)
     except DoesNotExist:
         raise Http404()
-    return render(request, "mainview/image.html", {"image": image})
+    return render(request, "mainview/image.html", {"image": image, "image_comments": image_comments})
 
 
 @login_required(login_url='/accounts/login/')
@@ -97,6 +101,3 @@ def comment_image(request, image_id):
     else:
         commentform = CommentForm()
     return render(request, 'image_comment.html', {"form": commentform})
-
-def comments(request, image_id):
-    image_comments = comment.

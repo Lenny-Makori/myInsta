@@ -15,11 +15,13 @@
       <h3>{{image.image_caption}}</h3>
   </div>
   <div class="row">
+    {%for comment in image_comments%}
     <div class="card" style="width: 18rem;">
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">Cras justo odio</li>
+        <li class="list-group-item">{{comment.comment}}</li>
       </ul>
     </div>
+    {%endfor%}
   </div>
 
   <div class="row">

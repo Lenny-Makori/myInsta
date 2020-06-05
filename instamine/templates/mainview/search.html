@@ -16,12 +16,19 @@
 
   {% if searched_user %}
     {% for image in searched_user %}
-    {{image.username}}
+    
       <div class="col-sm-6 col-md-3">
-        <img src="{{image.profile_pic.url}}"  class="img-responsive" alt="{{image.user}}"> 
-          <h1>{{image.bio}}</h1>
+        <h3>{{image.username}}</h3>
       </div>
     {% endfor %}
+    {%for one in profile%}
+    <div class="col-sm-6 col-md-3">
+      <img src="{{one.profile_pic.url}}"  class="img-responsive" alt="{{image.user}}" style="max-width:100px;"> 
+    </div>
+    {%endfor%}
+    <button type="button">Follow</button>
+    
+    {{profile.bio}}
   {% endif %}
   </div>
 </div>
