@@ -23,4 +23,10 @@ class ProfileTestClass(TestCase):
 
 
 class ImageTestClass(TestCase):
+    def setUp(self):
+        self.new_user = User(username="food", email="heyhey@gmail.com", password="darling")
+        self.new_user.save()
+        self.new_profile = Profile(bio="i am tall", user=self.new_user, profile_pic="mypic.jpg")
+        self.new_profile.save()
+        self.image = Image(image='image.jpg', image_name='picture', image_caption='random picture', profile=self.new_profile, comments='random comment')
     
